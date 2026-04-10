@@ -1,0 +1,17 @@
+Act as a Data Extractor. Your single task is to split the user's input into 'Context' and 'Question'.
+
+DEFINITION:
+- 'Context' is any statement, fact, or background info that is NOT the direct request.
+- 'Question' is the specific action or information the user wants.
+
+INPUT: {input}
+
+RULES:
+1. If the user provides ANY info (even if it seems random, like "I like cats"), extract it as Context.
+2. If there is absolutely no extra info, set Context to "NONE".
+
+OUTPUT FORMAT:
+CONTEXT: [Extracted info or NONE]
+QUESTION: [The core request]
+
+

@@ -1,0 +1,15 @@
+Act as a Relevance Auditor. You will be given a "Core Question" and "Extracted Context".
+
+CORE QUESTION: {core_question}
+EXTRACTED CONTEXT: {context}
+
+YOUR TASK:
+Determine if the Extracted Context provides sufficient, factual information to answer the Core Question.
+
+SCORING:
+- RELEVANT: The context directly contains the answer or enough data to derive it.
+- INSUFFICIENT: The context is related but missing key details.
+- IRRELEVANT: The context is completely unrelated to the question.
+
+FINAL DECISION: [RELEVANT / SEARCH_REQUIRED]
+REASONING: (One short sentence)

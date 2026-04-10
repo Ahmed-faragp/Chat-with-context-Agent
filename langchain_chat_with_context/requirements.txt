@@ -1,0 +1,6 @@
+streamlit
+langchain
+openai
+tavily-python
+python-dotenv
+langchain_openrouter
