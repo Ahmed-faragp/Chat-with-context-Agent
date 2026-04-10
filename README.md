@@ -1,173 +1,63 @@
-# Chat with Context Agent
+# 🚀 Smart Context-Aware LangChain Agent
 
-A Python-based intelligent conversational agent that maintains context across interactions to provide more accurate, relevant, and personalized responses.
+An intelligent chatbot built with **LangChain** and **ReAct Agents** that doesn't just answer questions—it evaluates them. This agent autonomously determines if it has enough information, searches the web for missing context, and validates data relevance before providing a grounded response.
 
-## 📋 Table of Contents
+## 🧠 Overview
+Unlike traditional chatbots that may hallucinate when information is lacking, this system implements a **Reasoning and Acting (ReAct)** loop. The agent mimics human logic to ensure every answer is backed by verified context.
 
-- [Overview](#overview)
-- [Features](#features)
-- [Installation](#installation)
-- [Quick Start](#quick-start)
-- [Usage](#usage)
-- [Project Structure](#project-structure)
-- [Configuration](#configuration)
-- [Contributing](#contributing)
-- [License](#license)
+### The Agentic Workflow:
+1.  **🕵️ Judge:** "Did the user provide enough background info?"
+2.  **🌐 Search:** "If not, let me fetch the latest data from the web."
+3.  **🎯 Validate:** "Is this information actually relevant to the question?"
+4.  **✂️ Process:** "Let me split the background facts from the core query."
+5.  **🤖 Answer:** "Generate a response using the processed context."
 
-## 🎯 Overview
+## 🧰 Core Tools
+The agent's intelligence is powered by four modular **LangChain Tools**:
 
-The Chat with Context Agent is an advanced conversational AI tool designed to engage in meaningful dialogues by leveraging sophisticated context awareness. It maintains conversation history and uses state-of-the-art language processing to provide intelligent, contextually-aware responses.
+| Tool | Role |
+| :--- | :--- |
+| **Context Presence Judge** | Uses an LLM to detect if background info is provided. |
+| **Web Search Tool** | Connects to Tavily API  to retrieve missing data. |
+| **Context Relevance Checker** | Filters out "noise" to ensure context matches the user's intent. |
+| **Context Splitter** | Separates raw input into structured `Context` and `Question` blocks. |
 
-## ✨ Features
+## 🛠️ Tech Stack
+* **Framework:** [LangChain](https://www.langchain.com/)
+* **LLM:** [Ollama](https://ollama.ai/) (Running Llama 3)
+* **Search API:** [Tavily AI](https://tavily.com/)
+* **UI:** Streamlit
+* **Language:** Python 3.10+
 
-- **Contextual Memory**: Maintains conversation history and context across multiple interactions
-- **Intelligent Reasoning**: Advanced algorithms for understanding user intent and generating relevant responses
-- **Multi-Turn Conversations**: Seamlessly handles complex, multi-turn dialogues
-- **User-Friendly Interface**: Simple and intuitive design for an enhanced user experience
-- **Customizable Behaviors**: Support for custom response formats and processing pipelines
-- **Error Handling**: Robust error management and graceful failure recovery
-- **Logging & Monitoring**: Comprehensive logging for debugging and performance tracking
-- **Easy Integration**: Ready for integration with other applications and platforms
+## 📂 Project Structure
+```text
+langchain_chat_with_context/
+├── tools/                # Python files for each LangChain tool
+├── agent/                # Agent initialization and ReAct logic
+├── prompts/              # System prompt templates (.txt)
+└── main.py               # Application entry point
 
-## 🚀 Installation
+🚀 Installation & Setup
+1. Clone the repository
+Bash
+git clone [https://github.com/your-username/smart-context-agent.git](https://github.com/your-username/smart-context-agent.git)
+cd smart-context-agent
+2. Install dependencies
+Bash
+pip install langchain langchain-community python-dotenv ollama requests
+3. Configure your LLM using openrouter
 
-### Prerequisites
 
-- Python 3.8 or higher
-- pip package manager
-- Virtual environment (recommended)
 
-### Setup Instructions
 
-1. **Clone the repository**
-   bash
-   git clone https://github.com/Ahmed-faragp/Chat-with-context-Agent.git
-   cd Chat-with-context-Agent
+🧪 Use Case Example
+User Input: "Tell me how attention mechanisms are used."
 
-2. **Create and activate a virtual environment**
-   bash
-   # On macOS/Linux
-   python3 -m venv venv
-   source venv/bin/activate
-   
-   # On Windows
-   python -m venv venv
-   venv\Scripts\activate
+Agent Logic: Detects missing context.
 
-3. **Install dependencies**
-   bash
-   pip install -r requirements.txt
+Action: Executes WebSearchTool for "Attention mechanisms in deep learning."
 
-## 🎮 Quick Start
+Validation: RelevanceChecker confirms the search results match the NLP topic.
 
-python
-from agent import ConversationAgent
+Final Output: A detailed, technical response based on real-time retrieved data.
 
-# Initialize the agent
-agent = ConversationAgent()
-
-# Start a conversation
-response = agent.chat("Hello! How are you?"
-print(response)
-
-# Continue the conversation with context preserved
-response = agent.chat("Tell me more about that")
-print(response)
-
-## 📖 Usage
-
-### Basic Conversation
-
-python
-from agent import ConversationAgent
-
-agent = ConversationAgent()
-
-# Single interaction
-response = agent.chat("What is machine learning?")
-print(f"Agent: {response}")
-
-### Interactive Chat Session
-
-python
-from agent import ConversationAgent
-
-agent = ConversationAgent()
-
-print("Chat with Context Agent (type 'exit' to quit)")
-while True:
-    user_input = input("You: ").strip()
-    
-    if user_input.lower() == 'exit':
-        print("Goodbye!")
-        break
-    
-    if not user_input:
-        continue
-    
-    response = agent.chat(user_input)
-    print(f"Agent: {response}\n")
-
-## 📁 Project Structure
-
-Chat-with-context-Agent/
-├── README.md
-├── requirements.txt
-├── main.py
-├── agent/
-│   ├── __init__.py
-│   ├── context_manager.py
-│   ├── conversation_agent.py
-│   ├── utils.py
-│   └── memory.py
-├── tests/
-│   ├── __init__.py
-│   ├── test_agent.py
-│   └── test_context.py
-├── config/
-│   ├── __init__.py
-│   └── settings.py
-└── logs/
-
-## ⚙️ Configuration
-
-Edit config/settings.py to customize the agent's behavior:
-
-python
-CONFIG = {
-    'max_context_length': 5000,
-    'max_conversation_history': 50,
-    'response_timeout': 30,
-    'enable_logging': True,
-    'log_level': 'INFO',
-    'temperature': 0.7,
-    'top_p': 0.9
-}
-
-## 🧪 Testing
-
-bash
-pytest --cov=agent tests/
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch: git checkout -b feature/amazing-feature
-3. Commit your changes: git commit -m "Add amazing feature"
-4. Push to the branch: git push origin feature/amazing-feature
-5. Open a Pull Request
-
-## 👤 Author
-
-**Ahmed Farag**
-- GitHub: [@Ahmed-faragp](https://github.com/Ahmed-faragp)
-
-## 📞 Support
-
-For questions or issues, please open an issue on GitHub.
-
----
-
-**Last Updated**: 2026-04-10 12:14:03
-**Status**: Active Development
-**Language**: Python (100%)
